@@ -44,12 +44,12 @@ def send_message():
 
     def send_whatsapp_message():
         global is_sending
-        print("✅ Received request to send message!")  # Debug Log
+        
         with lock:  # Ensure only one message is sent at a time
             if is_sending:
                 return  # Prevent multiple messages from running at the same time
             is_sending = True  # Set flag as process started
-           
+            print("✅ Received request to send message!")  # Debug Log
             try:
                 # Initialize WebDriver
                 service = Service(geckodriver_path)
