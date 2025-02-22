@@ -2,6 +2,7 @@
 from flask import Flask, render_template, request, jsonify
 from flask_socketio import SocketIO, emit
 import time
+
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
@@ -12,6 +13,7 @@ from selenium.webdriver.common.keys import Keys  # Import for pressing ENTER
 import threading
 
 app = Flask(__name__)
+
 socketio = SocketIO(app, cors_allowed_origins="*")  # Fixed WebSocket disconnections
 
 # Configure Selenium WebDriver
@@ -26,9 +28,9 @@ firefox_options.add_argument(r"C:\Users\janar\AppData\Roaming\Mozilla\Firefox\Pr
 is_sending = False
 lock = threading.Lock()  # Lock to handle multiple requests
 
-@app.route("/")
-def home():
-    return render_template("index.html")  # Load frontend
+# @app.route("/")
+# def home():
+#     return render_template("index.html")  # Load frontend
 
 
 # ✅ Ensure WebSocket Connection
@@ -58,7 +60,7 @@ def send_message():
             if is_sending:
                 return  # Prevent multiple messages from running at the same time
             is_sending = True  # Set flag as process started
-            socketio.emit("status_update", {"status": "PROCESS_RUNNING"})  # Notify all users
+           
 
             try:
                 # Initialize WebDriver
@@ -67,7 +69,7 @@ def send_message():
 
                 driver.get("https://web.whatsapp.com/")
                 time.sleep(10)  # Allow login
-                
+                print("✅ whatsapp oppened successfully")
                 
                 # Locate and select group chat
                 search_box = WebDriverWait(driver, 5).until(
@@ -82,7 +84,7 @@ def send_message():
 
                 search_box.send_keys(Keys.ENTER)
                 time.sleep(3)
-
+                print("✅ group found!")
                 # Locate message box and send message
                 message_box = WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located((By.XPATH, "//div[@aria-label='Type a message']"))
@@ -96,16 +98,10 @@ def send_message():
 
                 message_box.send_keys(Keys.ENTER)
                 time.sleep(5)
-
+                print("✅ message sent!")
                 driver.quit()
-
-                
-                
-                socketio.emit("status_update", {"status": "PROCESS_COMPLETED"})  # Notify all users
-               # socketio.emit("message_sent", {"user_id": user_id, "message": message})  # Notify only sender
-
             except Exception as e:
-                socketio.emit("status_update", {"status": "ERROR", "error": str(e)})
+                print("sending fail!")
             
             finally:
                 is_sending = False  # Reset flag
@@ -117,4 +113,5 @@ def send_message():
 
 
 if __name__ == "__main__":
+    
     socketio.run(app, debug=True, port=5000)  # Use socket.io for real-time updates
