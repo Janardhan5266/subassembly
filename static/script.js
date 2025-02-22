@@ -385,7 +385,10 @@ function previewdata() {
 }
 
 // Ensure Socket.IO is loaded
-const socket = io();
+const socket = io("wss://subassembly.onrender.com", {
+    transports: ["websocket", "polling"],
+});
+
 
 document.getElementById("send").addEventListener("click", function (event) {
     event.preventDefault(); // Stop default form submission
