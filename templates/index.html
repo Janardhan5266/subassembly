@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubAssembly</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+
+
+</head>
+
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo">SubAssembly</div>
+            <nav>
+                <ul>
+                    <li><a href="#line-name">Home</a></li>
+                    <li><a href="#about-section">About</a></li>
+                    <li><a href="#services-section">Services</a></li>
+                    <li><a href="#contacts-section">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+
+    <main>
+        <div class="sign">
+            <h6>by</h6>
+            <h4>janardhan</h4>
+        </div>
+        <!-- home -->
+        <h1 class="line-name" id="line-name">MOBILE POLE LINE</h1>
+        <FOrm>
+            <div class="info-container">
+                <div class="info-box">
+                    <label for="date-value">DATE:</label>
+                    <input id="date-value" onclick="this.showPicker()" class="info-value ">
+                </div>
+                <div class="info-box">
+                    <label for="shift-value">SHIFT:</label>
+                    <select id="shift-value" class="info-value">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layout-container">
+                <div class="references-container">
+                    <label class="display-label">REFERENCES</label>
+
+                    <div class="reference-bubble">
+                        <label class="reference-label">K<sub>2</sub>5</label><input type="number" value="" id="k2-5"
+                            placeholder="SUB ASSEMBLY" class="reference-input"><input type="number" value=""
+                            id="k2-5-braid" placeholder="BRAID" class="reference-input braid">
+                    </div>
+                    <div class="reference-bubble">
+                        <label class="reference-label">K<sub>2</sub>7</label><input type="number" value="" id="k2-7"
+                            placeholder="SUB ASSEMBLY" class="reference-input"><input type="number" value=""
+                            id="k2-7-braid" placeholder="BRAID" class="reference-input braid">
+                    </div>
+                    <div class="reference-bubble">
+                        <label class="reference-label">K<sub>2</sub>10</label><input type="number" value="" id="k2-10"
+                            placeholder="SUB ASSEMBLY" class="reference-input"><input type="number" value=""
+                            id="k2-10-braid" placeholder="BRAID" class="reference-input braid">
+                    </div>
+                    <div class="reference-bubble">
+                        <label class="reference-label">NW7</label><input type="number" value="" id="nw-7"
+                            placeholder="SUB ASSEMBLY" class="reference-input"><input type="number" value=""
+                            id="nw-7-braid" placeholder="BRAID" class="reference-input braid">
+                    </div>
+                    <div class="reference-bubble">
+                        <label class="reference-label">NW10</label><input type="number" value="" id="nw-10"
+                            placeholder="SUB ASSEMBLY" class="reference-input"><input type="number" value=""
+                            id="nw-10-braid" placeholder="BRAID" class="reference-input braid">
+                    </div>
+                    <div class="reference-bubble">
+                        <label class="reference-label">H<sub>2</sub>10</label><input type="number" value="" id="h2-10"
+                            placeholder="SUB ASSEMBLY" class="reference-input"><input type="number" value=""
+                            id="h2-10-braid" placeholder="BRAID" class="reference-input braid">
+                    </div>
+                    <div class="reference-bubble">
+                        <label class="reference-label">DC10</label><input type="number" value="" id="dc-10"
+                            placeholder="SUB ASSEMBLY" class="reference-input"><input type="number" value=""
+                            id="dc-10-braid" placeholder="BRAID" class="reference-input braid">
+                    </div>
+                    <div class="reference-bubble">
+                        <LAbel class="total-label">SUB ASSEMBLY</LAbel><label id="sub-assembly"
+                            for="reference-lebel"></label>
+                    </div>
+
+
+                    <label class="display-label production">LINE PRODUCTION</label>
+                    <div class="line-container">
+                        <div class="line-label">
+                            <label for="line-input" id="line1-label">LINE1</label><input type="text" class="line-input"
+                                id="line1" value="">
+                        </div>
+                        <div class="line-label">
+                            <label for="line-input" id="line2-label">LINE2</label><input type="text" class="line-input"
+                                id="line2" value="">
+                        </div>
+                        <div class="line-label">
+                            <label for="line-input" id="line3-label">LINE3</label><input type="text" class="line-input"
+                                id="line3" value="">
+                        </div>
+                    </div>
+                    <label class="display-label production">LINE ISSUES</label>
+                    <Div class="line-issues-container">
+                        <textarea class="line-issues" name="line-issues" id="line-issues"></textarea>
+
+
+                    </Div>
+                    <label class="display-label production">PART WAITINGS</label>
+                    <div class="part-waitings-container" id="part-waitings-container">
+
+                        <div class="part-waiting">
+                            <div class="waiting-field">
+                                <label for="part-number" class="part-number-label">PART NUMBER</label>
+                                <input id="part-number" class="part-number" type="text">
+                            </div>
+
+                            <div class="waiting-field">
+
+                                <label class="time" for="time">TIME</label>
+                                <input class="time-input" type="number" name="time" id="time">
+                            </div>
+                            <div class="waiting-field">
+                                <select class="time-unit" name="tm" id="tm">
+                                    <option value="minutes">MIN</option>
+                                    <option value="hours">HR</option>
+                                </select>
+                            </div>
+
+
+                            <button type="button" class="remove-btn" onclick="removePart(this)">Remove</button>
+                        </div>
+
+
+                    </div>
+                    <div class="add-button">
+                        <button id="add-button" onclick="addPart()" type="button">ADD</button>
+                    </div>
+                    <div class="status" id="status">no process running</div>
+                    <div class="buttons">
+                        <button class="button" id="preview" onclick="previewdata()" type="button">PREVIEW</button>
+                        <button class="button" id="send" type="submit">SEND</button>
+                    </div>
+
+                </div>
+                <div class="display-container">
+                    <label class="display-label">DISPLAY</label>
+                    <h1 id="show"></h1>
+                    <div id="previewdata" class="previewdata">
+
+                    </div>
+                </div>
+            </div>
+        </FOrm>
+        <!-- about -->
+        <div id="about-section" class="about">
+            <label class="display-label">About</label>
+            <div class="about-section">
+                <div><b>SubAssembly</b> is a project by <i>Janardhan,</i> created as a tribute <em>to Schneider Electric Hyderabad.</em> It helps
+                streamline production updates by automating the process of sharing sub-assembly counts, shift-wise data,
+                and line issues directly to WhatsApp.</div>
+
+                <div>The goal is to reduce manual work, save time, and improve accuracy in production reporting. By
+                eliminating the need for manual WhatsApp updates, SubAssembly ensures a smooth and efficient workflow
+                for the mobile pole line.</div>
+            </div>
+        </div>
+        <!-- services -->
+        <div id="services-section" class="services">
+            <label class="display-label">Services</label>
+            <div class="service">
+                <h3>✔ Automated Sub-Assembly Reporting</h3>
+                <p>Our system streamlines production reporting by automatically sending sub-assembly updates to WhatsApp
+                    groups. This ensures that supervisors and teams stay informed without the need for manual messaging,
+                    improving efficiency and reducing errors.</p>
+            </div>
+            <div class="service">
+                <h3>✔ Line Issue & Breakdown Reporting</h3>
+                <p>Instantly report assembly line issues and machine breakdowns in real-time. By logging problems
+                    directly through the platform, maintenance teams can take immediate action, minimizing downtime and
+                    ensuring smooth operations.</p>
+            </div>
+            <div class="service">
+                <h3>✔ Part Waiting Alerts </h3>
+                <p>Operators can notify supervisors about missing or delayed parts, preventing production stoppages. The
+                    system also allows tracking of part waiting duration, helping teams prioritize and manage resources
+                    effectively.</p>
+            </div>
+            <div class="service">
+                <h3>✔ Shift-Based Auto Updates</h3>
+                <p>The platform categorizes production data based on shifts, ensuring that reports are clear and
+                    well-organized. It automatically detects the active shift, reducing manual input and preventing
+                    errors in logging shift-based production details.</p>
+            </div>
+            <div class="service">
+                <h3>✔ Cloud Storage & Database Integration</h3>
+                <p>All reports and production data are securely stored in a cloud-based database. This allows easy
+                    access to historical records, ensuring that past production details can be retrieved whenever needed
+                    for analysis or audits.</p>
+            </div>
+            <div class="service">
+                <h3>✔ Customizable Workflows </h3>
+                <p>SubAssembly is designed to adapt to your production needs. Whether it's modifying reporting formats,
+                    integrating new features, or adjusting automation settings, the system can be customized to enhance
+                    workflow efficiency.</p>
+            </div>
+        </div>
+
+
+    </main>
+    <footer>
+        <!-- contacts -->
+        <div id="contacts-section" class="contacts">
+            <label class="display-label">Contact</label>
+            <section id="contact">
+                <h2>📞 Contact Us</h2>
+                <p>Have questions or suggestions? Reach out to us!</p>
+
+                <form action="https://formspree.io/f/mqaejglp" method="POST">
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Your Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="message">Your Message:</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+
+                    <button type="submit">Send Message</button>
+                </form>
+
+                <h3>📌 Get in Touch</h3>
+                <ul>
+                    <li>📧 Email: <a href="mailto:janardhanmridha123@gmail.com">subassembly.support@gmail.com</a></li>
+                    <li>📺 Instagram: <a href="https://www.instagram.com/alone_x_mj_?igsh=MTczdGVwdnpxdzNveA==" target="_blank">see me in instagram</a></li>
+                    <li>📍 Location: <a href="https://maps.app.goo.gl/dafaMK6qnjSjNLe56?g_st=aw" target="_blank">View on Google Maps</a></li>
+                </ul>
+            </section>
+        </div>
+    </footer>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="/static/script.js"></script>
+
+</body>
+
+</html>

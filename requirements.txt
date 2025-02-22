@@ -1,0 +1,6 @@
+Flask
+Flask-SocketIO
+eventlet
+selenium
+gunicorn
+python-dotenv
