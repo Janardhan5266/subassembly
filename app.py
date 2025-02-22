@@ -1,8 +1,7 @@
 
-from flask import Flask, render_template, request, jsonify
-from flask_socketio import SocketIO, emit
-import time
 
+from flask import Flask, render_template, request, jsonify
+import time
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
@@ -14,31 +13,21 @@ import threading
 
 app = Flask(__name__)
 
-socketio = SocketIO(app, cors_allowed_origins="*")  # Fixed WebSocket disconnections
-
 # Configure Selenium WebDriver
 geckodriver_path = r"C:\Users\janar\mobile pole\backend\geckodriver.exe"
 firefox_options = Options()
 firefox_options.add_argument("-profile")
-firefox_options.headless = True  # Enable headless mode
-
+firefox_options.add_argument("--headless")
+# firefox_options.headless = True  # Enable headless mode
 firefox_options.add_argument(r"C:\Users\janar\AppData\Roaming\Mozilla\Firefox\Profiles\o60162pp.default-release")
 
 # Global flag to track if a message is being sent
 is_sending = False
 lock = threading.Lock()  # Lock to handle multiple requests
 
-# @app.route("/")
-# def home():
-#     return render_template("index.html")  # Load frontend
-
-
-# ✅ Ensure WebSocket Connection
-@socketio.on("connect")
-def handle_connect():
-    print("Client connected")
-    emit("status_update", {"status": "CONNECTED"})  # Notify client on successful connection
-
+@app.route("/")
+def home():
+    return render_template("index.html")  # Load frontend
 
 @app.route("/send_message", methods=["POST"])
 def send_message():
@@ -61,7 +50,6 @@ def send_message():
                 return  # Prevent multiple messages from running at the same time
             is_sending = True  # Set flag as process started
            
-
             try:
                 # Initialize WebDriver
                 service = Service(geckodriver_path)
@@ -69,7 +57,7 @@ def send_message():
 
                 driver.get("https://web.whatsapp.com/")
                 time.sleep(10)  # Allow login
-                print("✅ whatsapp oppened successfully")
+                print("✅ whatsapp opened successfully")
                 
                 # Locate and select group chat
                 search_box = WebDriverWait(driver, 5).until(
@@ -111,7 +99,5 @@ def send_message():
 
     return jsonify({"success": True, "message": "Message process started"})
 
-
 if __name__ == "__main__":
-    
-    socketio.run(app, debug=True, port=5000)  # Use socket.io for real-time updates
+    app.run(debug=True, port=5000)  # Run Flask app without WebSockets

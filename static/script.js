@@ -384,10 +384,6 @@ function previewdata() {
     document.getElementById("previewdata").innerText = data.join("\n");
 }
 
-// Ensure Socket.IO is loaded
-const socket = io("wss://subassembly.onrender.com", {
-    transports: ["websocket", "polling"],
-});
 
 
 document.getElementById("send").addEventListener("click", function (event) {
@@ -397,13 +393,12 @@ document.getElementById("send").addEventListener("click", function (event) {
 
     if (!message) {
         document.getElementById("status").innerText = "Message is empty! Please enter details.";
-        // alert("Message is empty! Please enter details.");
         return;
     }
 
     console.log("Sending message:", message);
 
-    fetch("https://subassembly.onrender.com/send_message", {
+    fetch("/send_message", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: message })
@@ -412,23 +407,13 @@ document.getElementById("send").addEventListener("click", function (event) {
         .then(data => {
             console.log("Response from backend:", data);
             if (data.success) {
-
                 document.getElementById("status").innerText = data.message;
-                //alert("✅ Message sent successfully to WhatsApp!");
-
-            }
-
-            else {
+            } else {
                 alert("❌ Failed to send message: " + data.error);
             }
-
         })
-
         .catch(error => {
             console.error("Fetch error:", error);
             alert("⚠️ An error occurred. Check console for details.");
         });
-
-
 });
-
