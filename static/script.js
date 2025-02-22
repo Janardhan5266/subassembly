@@ -400,7 +400,7 @@ document.getElementById("send").addEventListener("click", function (event) {
 
     console.log("Sending message:", message);
 
-    fetch("/send_message", {
+    fetch("https://subassembly.onrender.com/send_message", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: message })

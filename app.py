@@ -18,6 +18,8 @@ socketio = SocketIO(app, cors_allowed_origins="*")  # Fixed WebSocket disconnect
 geckodriver_path = r"C:\Users\janar\mobile pole\backend\geckodriver.exe"
 firefox_options = Options()
 firefox_options.add_argument("-profile")
+firefox_options.headless = True  # Enable headless mode
+
 firefox_options.add_argument(r"C:\Users\janar\AppData\Roaming\Mozilla\Firefox\Profiles\o60162pp.default-release")
 
 # Global flag to track if a message is being sent
